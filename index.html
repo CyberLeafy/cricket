@@ -240,7 +240,7 @@
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Loading...`;
             
             setTimeout(() => {
-                alert("This button would now navigate to the detailed stats page with scores.");
+                window.location.href = `https://live.hellocoder.online`;
                 btn.innerHTML = `View Live Score <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>`;
             }, 800);
         }
