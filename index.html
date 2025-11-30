@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Match Center - Pro View</title>
+    <title>🏏 NPL | MATCH </title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     
     <!-- FontAwesome -->
@@ -23,16 +23,12 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        sport: {
-                            black: '#111827',
-                            gray: '#F3F4F6',
-                            blue: '#2563EB',
-                            red: '#DC2626'
+                        brand: {
+                            black: '#0f172a',
+                            gray: '#f1f5f9',
+                            blue: '#3b82f6',
+                            red: '#ef4444'
                         }
-                    },
-                    boxShadow: {
-                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
-                        'hover': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.01)',
                     }
                 }
             }
@@ -40,214 +36,216 @@
     </script>
 
     <style>
-        /* Technical Grid Background */
+        /* Clean Technical Background */
         body {
-            background-color: #F9FAFB;
-            background-image: 
-                linear-gradient(#E5E7EB 1px, transparent 1px),
-                linear-gradient(90deg, #E5E7EB 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
         }
 
-        /* Shimmer Effect for Live Button */
-        .shimmer-btn {
-            background: linear-gradient(90deg, #DC2626 0%, #ef4444 50%, #DC2626 100%);
+        /* Live Button Shimmer Animation */
+        .btn-live {
+            background: linear-gradient(90deg, #2563eb 0%, #60a5fa 50%, #2563eb 100%);
             background-size: 200% auto;
-            animation: shimmer 3s linear infinite;
+            animation: shimmer 2s linear infinite;
         }
         
         @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+            to { background-position: 200% center; }
         }
 
-        /* Entry Animation */
-        .slide-in {
-            animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(20px);
+        /* Card Hover Lift */
+        .match-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .match-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="text-sport-black min-h-screen flex flex-col items-center pt-12 pb-12 px-4">
+<body class="text-slate-800 min-h-screen flex flex-col items-center py-12 px-4">
 
-    <!-- Top Navigation / Logo Area -->
-    <nav class="w-full max-w-5xl flex justify-between items-end mb-12 border-b-2 border-black pb-4">
-        <div>
-            <div class="text-xs font-bold uppercase text-gray-500 tracking-wider mb-1">Official Match Center</div>
-            <h1 class="text-4xl font-black tracking-tighter">SPORT<span class="text-sport-blue">FEED</span>.</h1>
-        </div>
-        <div class="hidden md:block text-right">
-            <div id="live-indicator" class="hidden items-center justify-end gap-2 text-sport-red font-bold animate-pulse">
-                <i class="fa-solid fa-circle text-xs"></i> LIVE ACTION
+    <!-- Header -->
+    <header class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-brand-black text-white flex items-center justify-center rounded-lg">
+                <i class="fa-solid fa-bolt text-xl"></i>
             </div>
-            <div class="text-sm font-medium text-gray-500" id="date-display"></div>
+            <h1 class="text-2xl font-black tracking-tight text-slate-900">NAVODAYA <span class="text-brand-blue">PREMIER LEAUGH</span></h1>
         </div>
-    </nav>
+        <div class="text-sm font-medium text-slate-500 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm" id="current-date">
+            <!-- Date injected by JS -->
+        </div>
+    </header>
 
-    <!-- Main Content List -->
-    <div id="matches-list" class="w-full max-w-5xl flex flex-col gap-6">
-        <!-- JS Injects HTML Here -->
-    </div>
+    <!-- Match Feed Container -->
+    <main id="match-feed" class="w-full max-w-4xl flex flex-col gap-5">
+        <!-- Matches injected by JS -->
+    </main>
 
-    <!-- Footer -->
-    <footer class="mt-20 text-center text-gray-400 text-sm">
-        <p>© 2025 SportFeed Coverage. All rights reserved.</p>
-    </footer>
-
-    <!-- JavaScript Logic -->
+    <!-- JavaScript -->
     <script>
-        // --- 1. CONFIGURATION ---
+        // 1. Mock Data (No Scores needed in the preview logic anymore)
         const matches = [
             {
-                id: 101,
-                league: "NBA • FINALS GAME 4",
-                teamA: { name: "Lakers", logo: "fa-basketball", color: "text-yellow-500", score: 102 },
-                teamB: { name: "Celtics", logo: "fa-leaf", color: "text-green-600", score: 98 },
+                id: 1,
+                tournament: "PREMIER LEAGUE",
+                homeTeam: "RED",
+                homeLogo: "fa-shield-halved",
+                homeColor: "text-red-600",
+                awayTeam: "YELLOW",
+                awayLogo: "fa-crown",
+                awayColor: "text-blue-700",
                 status: "LIVE",
-                period: "Q4 - 2:34",
+                progress: "2nd Half • 68'", // Showing progress instead of score
                 startTime: null
             },
             {
-                id: 102,
-                league: "UEFA CHAMPIONS LEAGUE",
-                teamA: { name: "Barcelona", logo: "fa-shield-halved", color: "text-red-700", score: 0 },
-                teamB: { name: "Man Utd", logo: "fa-ship", color: "text-red-600", score: 0 },
+                id: 2,
+                tournament: "LA LIGA",
+                homeTeam: "GREEN",
+                homeLogo: "fa-flag",
+                homeColor: "text-purple-700",
+                awayTeam: "BLUE",
+                awayLogo: "fa-star",
+                awayColor: "text-yellow-600",
                 status: "UPCOMING",
-                period: null,
-                // Set start time to 2 hours from now
-                startTime: new Date(new Date().getTime() + (2 * 60 * 60 * 1000)) 
+                progress: null,
+                // Time set to 3 hours from now
+                startTime: new Date(new Date().getTime() + (3 * 60 * 60 * 1000)) 
             }
         ];
 
-        // --- 2. UTILITIES ---
-        const formatDate = () => {
-            const options = { weekday: 'short', month: 'long', day: 'numeric' };
-            document.getElementById('date-display').textContent = new Date().toLocaleDateString('en-US', options);
-        };
+        // 2. Set Date
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { 
+            weekday: 'long', month: 'short', day: 'numeric' 
+        });
 
+        // 3. Render Function
         const renderMatches = () => {
-            const container = document.getElementById('matches-list');
-            const liveIndicator = document.getElementById('live-indicator');
-            let hasLiveMatch = false;
-
-            container.innerHTML = matches.map((match, index) => {
+            const container = document.getElementById('match-feed');
+            
+            container.innerHTML = matches.map(match => {
                 const isLive = match.status === "LIVE";
-                if(isLive) hasLiveMatch = true;
-                
-                // Animation delay staggered
-                const animationStyle = `animation-delay: ${index * 150}ms`;
 
-                // Layout Components
-                const statusLabel = isLive 
-                    ? `<span class="inline-block bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded border border-red-200">LIVE</span>` 
-                    : `<span class="inline-block bg-gray-100 text-gray-500 text-xs font-bold px-2 py-1 rounded border border-gray-200">UPCOMING</span>`;
+                // -- Status Badge --
+                const badge = isLive 
+                    ? `<div class="flex items-center gap-2 text-brand-red font-bold text-xs uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full border border-red-100">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                        </span>
+                        Live Now
+                       </div>`
+                    : `<div class="text-slate-500 font-bold text-xs uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                        Upcoming
+                       </div>`;
 
-                const centerContent = isLive 
-                    ? `<div class="text-3xl md:text-5xl font-black tracking-tighter text-gray-900 mx-4">
-                         ${match.teamA.score} <span class="text-gray-300 mx-2">-</span> ${match.teamB.score}
-                       </div>
-                       <div class="text-red-500 font-mono text-sm font-bold mt-1 animate-pulse">${match.period}</div>`
-                    : `<div class="text-3xl md:text-5xl font-black tracking-tighter text-gray-300 mx-4">VS</div>
-                       <div class="text-sport-blue font-mono text-sm font-bold mt-1 countdown" data-time="${match.startTime}">Calculating...</div>`;
+                // -- Center Info (Replaces Score) --
+                let centerInfo = '';
+                if (isLive) {
+                    // Show "VS" and the Match Progress (Time)
+                    centerInfo = `
+                        <div class="text-4xl font-black text-slate-200">VS</div>
+                        <div class="mt-2 text-brand-blue font-mono font-semibold text-sm animate-pulse">
+                            ${match.progress}
+                        </div>
+                    `;
+                } else {
+                    // Show "VS" and Countdown
+                    centerInfo = `
+                        <div class="text-4xl font-black text-slate-200">VS</div>
+                        <div class="mt-2 text-slate-400 font-mono text-sm countdown" data-time="${match.startTime}">
+                            Loading...
+                        </div>
+                    `;
+                }
 
-                const actionButton = isLive
-                    ? `<button onclick="openLiveView(${match.id})" class="shimmer-btn group relative w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-red-600 text-white font-bold rounded-lg shadow-lg hover:shadow-red-500/30 transition-all transform hover:-translate-y-1">
-                            <span>Watch Live Score</span>
-                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                // -- Action Button --
+                const button = isLive
+                    ? `<button onclick="viewScore(${match.id})" class="btn-live w-full md:w-auto px-6 py-3 rounded-lg text-white font-semibold text-sm shadow-lg shadow-blue-500/30 hover:brightness-110 transition-all">
+                         View Live Score <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
                        </button>`
-                    : `<button class="w-full md:w-auto px-6 py-4 border-2 border-gray-200 text-gray-500 font-bold rounded-lg hover:border-black hover:text-black transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-regular fa-bell"></i> Remind Me
+                    : `<button class="w-full md:w-auto px-6 py-3 rounded-lg border border-slate-200 text-slate-400 font-medium text-sm bg-slate-50 cursor-not-allowed">
+                         Match starts soon
                        </button>`;
 
-                // The Card HTML
+                // -- HTML Output --
                 return `
-                <div class="slide-in relative bg-white border border-gray-200 rounded-xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-soft hover:shadow-hover transition-shadow duration-300" style="${animationStyle}">
-                    
-                    <!-- Left: League Info -->
-                    <div class="w-full md:w-1/4 flex flex-row md:flex-col justify-between md:justify-center items-center md:items-start border-b md:border-b-0 md:border-r border-gray-100 pb-4 md:pb-0 pr-0 md:pr-6">
-                        ${statusLabel}
-                        <h3 class="text-sm font-bold text-gray-400 mt-0 md:mt-2 tracking-wide">${match.league}</h3>
-                    </div>
-
-                    <!-- Center: Matchup -->
-                    <div class="w-full md:w-2/4 flex items-center justify-center">
-                        <!-- Team A -->
-                        <div class="flex flex-col items-center gap-2 w-1/3">
-                            <i class="fa-solid ${match.teamA.logo} text-4xl ${match.teamA.color}"></i>
-                            <span class="font-bold text-lg md:text-xl truncate max-w-full">${match.teamA.name}</span>
+                    <div class="match-card bg-white rounded-xl p-6 border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                        
+                        <!-- Left: Info -->
+                        <div class="flex flex-col items-center md:items-start w-full md:w-1/4">
+                            ${badge}
+                            <span class="mt-3 text-xs font-bold text-slate-400 uppercase tracking-widest">${match.tournament}</span>
                         </div>
 
-                        <!-- Score / VS -->
-                        <div class="flex flex-col items-center w-1/3">
-                            ${centerContent}
+                        <!-- Center: Teams & VS -->
+                        <div class="flex-1 flex items-center justify-center gap-6 w-full">
+                            <!-- Home -->
+                            <div class="flex flex-col items-center gap-2 w-24 text-center">
+                                <i class="fa-solid ${match.homeLogo} text-4xl ${match.homeColor} mb-1"></i>
+                                <span class="font-bold text-slate-800 text-lg leading-tight">${match.homeTeam}</span>
+                            </div>
+
+                            <!-- VS Graphic -->
+                            <div class="flex flex-col items-center w-32">
+                                ${centerInfo}
+                            </div>
+
+                            <!-- Away -->
+                            <div class="flex flex-col items-center gap-2 w-24 text-center">
+                                <i class="fa-solid ${match.awayLogo} text-4xl ${match.awayColor} mb-1"></i>
+                                <span class="font-bold text-slate-800 text-lg leading-tight">${match.awayTeam}</span>
+                            </div>
                         </div>
 
-                        <!-- Team B -->
-                        <div class="flex flex-col items-center gap-2 w-1/3">
-                            <i class="fa-solid ${match.teamB.logo} text-4xl ${match.teamB.color}"></i>
-                            <span class="font-bold text-lg md:text-xl truncate max-w-full">${match.teamB.name}</span>
+                        <!-- Right: Button -->
+                        <div class="w-full md:w-1/4 flex justify-center md:justify-end">
+                            ${button}
                         </div>
-                    </div>
 
-                    <!-- Right: Action -->
-                    <div class="w-full md:w-1/4 flex justify-center md:justify-end pl-0 md:pl-6 border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0">
-                        ${actionButton}
                     </div>
-                </div>
                 `;
             }).join('');
-
-            // Toggle top nav indicator
-            if(hasLiveMatch) liveIndicator.classList.remove('hidden');
-            if(hasLiveMatch) liveIndicator.classList.add('flex');
             
-            // Start countdowns
-            initCountdowns();
+            startTimer();
         };
 
-        // --- 3. COUNTDOWN LOGIC ---
-        const initCountdowns = () => {
+        // 4. Timer Logic
+        function startTimer() {
             setInterval(() => {
                 document.querySelectorAll('.countdown').forEach(el => {
                     const target = new Date(el.dataset.time).getTime();
                     const now = new Date().getTime();
                     const diff = target - now;
-
-                    if (diff < 0) {
+                    
+                    if(diff <= 0) {
                         el.innerText = "Starting...";
-                    } else {
-                        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                        const s = Math.floor((diff % (1000 * 60)) / 1000);
-                        el.innerText = `Starts in ${h}h ${m}m ${s}s`;
+                        return;
                     }
+                    
+                    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    el.innerText = `Starts in ${h}h ${m}m`;
                 });
-            }, 1000);
-        };
-
-        // --- 4. INTERACTIONS ---
-        window.openLiveView = (id) => {
-            // Demo Interaction
-            const btn = event.currentTarget;
-            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Loading Stream...`;
-            setTimeout(() => {
-                alert(`Redirecting to live data for Match ID: ${id}`);
-                btn.innerHTML = `<span>Watch Live Score</span> <i class="fa-solid fa-arrow-right"></i>`;
             }, 1000);
         }
 
-        // Initialize
-        formatDate();
-        renderMatches();
+        // 5. Button Action
+        function viewScore(id) {
+            // This is where you would reveal the score or go to a details page
+            const btn = event.currentTarget;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Loading...`;
+            
+            setTimeout(() => {
+                alert("This button would now navigate to the detailed stats page with scores.");
+                btn.innerHTML = `View Live Score <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>`;
+            }, 800);
+        }
 
+        renderMatches();
     </script>
 </body>
 </html>
