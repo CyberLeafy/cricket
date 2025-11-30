@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏏 NPL | MATCH </title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
+
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -49,21 +50,25 @@
             background-size: 200% auto;
             animation: shimmer 2s linear infinite;
         }
-        
+
         @keyframes shimmer {
-            to { background-position: 200% center; }
+            to {
+                background-position: 200% center;
+            }
         }
 
         /* Card Hover Lift */
         .match-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .match-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
+
 <body class="text-slate-800 min-h-screen flex flex-col items-center py-12 px-4">
 
     <!-- Header -->
@@ -72,9 +77,11 @@
             <div class="w-10 h-10 flex items-center justify-center rounded-full">
                 <img src="./image/img.jpg" alt="" class="rounded-full">
             </div>
-            <h1 class="text-2xl font-black tracking-tight text-slate-900">NAVODAYA <span class="text-brand-blue">PREMIER LEAGUE</span> <span class="text-brand-red">12</span></h1>
+            <h1 class="text-2xl font-black tracking-tight text-slate-900">NAVODAYA <span class="text-brand-blue">PREMIER
+                    LEAGUE</span> <span class="text-brand-red">12</span></h1>
         </div>
-        <div class="text-sm font-medium text-slate-500 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm" id="current-date">
+        <div class="text-sm font-medium text-slate-500 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm"
+            id="current-date">
             <!-- Date injected by JS -->
         </div>
     </header>
@@ -113,24 +120,24 @@
                 status: "LIVE",
                 progress: '',
                 // Time set to 3 hours from now
-                startTime: new Date("2025-11-30T14:50:00") 
+                startTime: new Date("2025-11-30T14:50:00")
             }
         ];
 
         // 2. Set Date
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { 
-            weekday: 'long', month: 'short', day: 'numeric' 
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', {
+            weekday: 'long', month: 'short', day: 'numeric'
         });
 
         // 3. Render Function
         const renderMatches = () => {
             const container = document.getElementById('match-feed');
-            
+
             container.innerHTML = matches.map(match => {
                 const isLive = match.status === "LIVE";
 
                 // -- Status Badge --
-                const badge = isLive 
+                const badge = isLive
                     ? `<div class="flex items-center gap-2 text-brand-red font-bold text-xs uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full border border-red-100">
                         <span class="relative flex h-2 w-2">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -148,8 +155,13 @@
                     // Show "VS" and the Match Progress (Time)
                     centerInfo = `
                         <div class="text-4xl font-black text-slate-200">VS</div>
-                        <div class="mt-2 text-brand-blue font-mono font-semibold text-sm animate-pulse">
-                            ${match.progress}
+                        <div class="mt-2  grid justify-center item-center">
+                            <div class="flex gap-3 font-extrabold text-4xl justify-center item-center">
+                                <h1 id="runs">0<h1>/<h1 id="wickets">0</h1>
+                            </div>
+                            <div class="flex gap-2 text-brand-blue text-sm animate-pulse font-semibold justify-center item-center">
+                                <h1 id="balls">0<h1>.<h1 id="overs">0</h1>
+                            </div>
                         </div>
                     `;
                 } else {
@@ -209,7 +221,7 @@
                     </div>
                 `;
             }).join('');
-            
+
             startTimer();
         };
 
@@ -220,12 +232,12 @@
                     const target = new Date(el.dataset.time).getTime();
                     const now = new Date().getTime();
                     const diff = target - now;
-                    
-                    if(diff <= 0) {
+
+                    if (diff <= 0) {
                         el.innerText = "Starting...";
                         return;
                     }
-                    
+
                     const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                     const s = Math.floor((diff / 1000) % 60);
@@ -239,7 +251,7 @@
             // This is where you would reveal the score or go to a details page
             const btn = event.currentTarget;
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Loading...`;
-            
+
             setTimeout(() => {
                 window.location.href = `https://cricheroes.com/scorecard/20349252/Navodaya-Primium-League-12/Red-Royals-vs-Yellow-Super-Kings`;
                 btn.innerHTML = `View Scorecard <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>`;
@@ -247,6 +259,27 @@
         }
 
         renderMatches();
+
+
+
+        function loadScore() {
+            fetch("https://live.hellocoder.online/score")
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("runs").innerText = data.run;
+                    document.getElementById("overs").innerText = data.over;
+                    document.getElementById("balls").innerText = data.ball;
+                    document.getElementById("wickets").innerText = data.wicket;
+
+                    console.log(data);
+                    
+                })
+                .catch(err => console.log(err));
+        }
+
+        setInterval(loadScore, 2000);
+        loadScore();
     </script>
 </body>
+
 </html>
