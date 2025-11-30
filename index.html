@@ -91,15 +91,15 @@
             {
                 id: 1,
                 tournament: "PREMIER LEAGUE",
-                homeTeam: "RED",
+                homeTeam: "RED ROYALS",
                 homeLogo: "fa-shield-halved",
                 homeColor: "text-red-600",
-                awayTeam: "YELLOW",
+                awayTeam: "YELLOW SUPER KING",
                 awayLogo: "fa-crown",
                 awayColor: "text-blue-700",
                 status: "LIVE",
-                progress: "2nd Half • 68'", // Showing progress instead of score
-                startTime: null
+                progress: null, // Showing progress instead of score
+                startTime: new Date("2025-11-30T10:30:00") 
             },
             {
                 id: 2,
@@ -113,7 +113,7 @@
                 status: "UPCOMING",
                 progress: null,
                 // Time set to 3 hours from now
-                startTime: new Date("2025-12-01T22:00:00") 
+                startTime: new Date("2025-11-30T14:50:00") 
             }
         ];
 
@@ -241,8 +241,8 @@
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Loading...`;
             
             setTimeout(() => {
-                window.location.href = `https://live.hellocoder.online`;
-                btn.innerHTML = `View Live Score <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>`;
+                window.location.href = `https://cricheroes.com/scorecard/20349252/Navodaya-Primium-League-12/Red-Royals-vs-Yellow-Super-Kings`;
+                btn.innerHTML = `View Scorecard <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>`;
             }, 800);
         }
 
