@@ -4,32 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏏 NPL | MATCH </title>
+    <title>🏏 NPL | LIVE CENTER</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Tailwind Config -->
+    <!-- Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            black: '#0f172a',
-                            gray: '#f1f5f9',
-                            blue: '#3b82f6',
-                            red: '#ef4444'
-                        }
+                        brand: { dark: '#0f172a', red: '#ef4444', blue: '#3b82f6' }
                     }
                 }
             }
@@ -37,249 +33,279 @@
     </script>
 
     <style>
-        /* Clean Technical Background */
         body {
-            background-color: #f8fafc;
+            background-color: #f1f5f9;
             background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 24px 24px;
+            background-size: 32px 32px;
         }
 
-        /* Live Button Shimmer Animation */
         .btn-live {
-            background: linear-gradient(90deg, #2563eb 0%, #60a5fa 50%, #2563eb 100%);
+            background: linear-gradient(90deg, #ef4444 0%, #f87171 50%, #ef4444 100%);
             background-size: 200% auto;
             animation: shimmer 2s linear infinite;
         }
 
-        @keyframes shimmer {
-            to {
-                background-position: 200% center;
-            }
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        /* Animation for when score changes */
+        .score-update {
+            animation: flash 0.5s ease-out;
+            color: #ef4444; /* Flash Red briefly */
         }
 
-        /* Card Hover Lift */
-        .match-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .match-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        @keyframes flash {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); color: inherit; }
         }
     </style>
 </head>
 
-<body class="text-slate-800 min-h-screen flex flex-col items-center py-12 px-4">
+<body class="text-slate-800 min-h-screen flex flex-col items-center py-10 px-4">
 
     <!-- Header -->
-    <header class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 flex items-center justify-center rounded-full">
-                <img src="./image/img.jpg" alt="" class="rounded-full">
+    <header class="w-full max-w-5xl flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        <div class="flex items-center gap-4 bg-white p-2 pr-6 rounded-full shadow-sm border border-slate-200">
+            <div class="w-12 h-12 bg-slate-900 flex items-center justify-center rounded-full text-white">
+                <i class="fa-solid fa-trophy text-xl text-yellow-400"></i>
             </div>
-            <h1 class="text-2xl font-black tracking-tight text-slate-900">NAVODAYA <span class="text-brand-blue">PREMIER
-                    LEAGUE</span> <span class="text-brand-red">12</span></h1>
+            <div>
+                <h1 class="text-xl font-black text-slate-900 leading-none">NPL <span class="text-brand-red">LIVE</span></h1>
+                <p class="text-xs font-bold text-slate-400 tracking-widest">SEASON 12</p>
+            </div>
         </div>
-        <div class="text-sm font-medium text-slate-500 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm"
-            id="current-date">
-            <!-- Date injected by JS -->
+        <div class="text-sm font-semibold text-slate-500 bg-white px-5 py-2.5 rounded-full border border-slate-200 flex items-center gap-2">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            Connected
         </div>
     </header>
 
-    <!-- Match Feed Container -->
-    <main id="match-feed" class="w-full max-w-4xl flex flex-col gap-5">
-        <!-- Matches injected by JS -->
+    <!-- Match Feed -->
+    <main id="match-feed" class="w-full max-w-5xl flex flex-col gap-6">
+        <!-- JS will inject matches here -->
     </main>
 
     <!-- JavaScript -->
     <script>
-        // 1. Mock Data (No Scores needed in the preview logic anymore)
-        const matches = [
-            // {
-            //     id: 1,
-            //     tournament: "PREMIER LEAGUE",
-            //     homeTeam: "RED ROYALS",
-            //     homeLogo: "fas fa-tshirt",
-            //     homeColor: "text-red-600",
-            //     awayTeam: "YELLOW SUPER KING",
-            //     awayLogo: "fas fa-tshirt",
-            //     awayColor: "text-yellow-700",
-            //     status: "LIVE",
-            //     progress: '', // Showing progress instead of score
-            //     startTime: new Date("2025-11-30T10:30:00") 
-            // },
+        // 1. STATIC CONFIGURATION (The Teams)
+        // Ensure the ID here matches the ID in your API JSON
+        const matchConfig = [
             {
-                id: 2,
-                tournament: "PREMIER LEAGUE",
-                homeTeam: "GREEN",
+                id: 101, 
+                tournament: "LEAGUE STAGE",
+                homeTeam: "YELLOW",
                 homeLogo: "fas fa-tshirt",
-                homeColor: "text-green-700",
-                awayTeam: "BLUE",
+                homeColor: "text-yellow-600",
+                awayTeam: "GREEN",
+                awayLogo: "fas fa-tshirt",
+                awayColor: "text-green-600",
+                startTime: new Date("2025-12-01T2:30:00"),
+                matchLink: "https://cricheroes.com/scorecard/20349286/navodaya-primium-league-12/yellow-super-kings-vs-green-warriors/live"
+            },
+            {
+                id: 102,
+                tournament: "LEAGUE STAGE",
+                homeTeam: "GREEN WARRIORS",
+                homeLogo: "fas fa-tshirt",
+                homeColor: "text-green-600",
+                awayTeam: "BLUE TITANS",
                 awayLogo: "fas fa-tshirt",
                 awayColor: "text-blue-600",
-                status: "LIVE",
-                progress: '',
-                // Time set to 3 hours from now
-                startTime: new Date("2025-11-30T14:50:00")
+                startTime: new Date("2025-12-03T14:30:00"),
+                matchLink: "#"
             }
         ];
 
-        // 2. Set Date
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', {
-            weekday: 'long', month: 'short', day: 'numeric'
-        });
-
-        // 3. Render Function
+        // 2. RENDER INITIAL SKELETON
         const renderMatches = () => {
             const container = document.getElementById('match-feed');
-
-            container.innerHTML = matches.map(match => {
-                const isLive = match.status === "LIVE";
-
-                // -- Status Badge --
-                const badge = isLive
-                    ? `<div class="flex items-center gap-2 text-brand-red font-bold text-xs uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full border border-red-100">
-                        <span class="relative flex h-2 w-2">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                        </span>
-                        Live Now
-                       </div>`
-                    : `<div class="text-slate-500 font-bold text-xs uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                        Upcoming
-                       </div>`;
-
-                // -- Center Info (Replaces Score) --
-                let centerInfo = '';
-                if (isLive) {
-                    // Show "VS" and the Match Progress (Time)
-                    centerInfo = `
-                        <div class="text-4xl font-black text-slate-200">VS</div>
-                        <div class="mt-2  grid justify-center item-center">
-                            <div class="flex gap-3 font-extrabold text-4xl justify-center item-center">
-                                <h1 id="runs">0<h1>/<h1 id="wickets">0</h1>
-                            </div>
-                            <div class="flex gap-2 text-brand-blue text-sm animate-pulse font-semibold justify-center item-center">
-                                <h1 id="balls">0<h1>.<h1 id="overs">0</h1>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    // Show "VS" and Countdown
-                    centerInfo = `
-                        <div class="text-4xl font-black text-slate-200">VS</div>
-                        <div class="mt-2 text-slate-400 font-mono text-sm countdown" data-time="${match.startTime}">
-                            Loading...
-                        </div>
-                    `;
-                }
-
-                // -- Action Button --
-                const button = isLive
-                    ? `<button onclick="viewScore(${match.id})" class="btn-live w-full md:w-auto px-6 py-3 rounded-lg text-white font-semibold text-sm shadow-lg shadow-blue-500/30 hover:brightness-110 transition-all">
-                         View Live Score <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
-                       </button>`
-                    : `<button class="w-full md:w-auto px-6 py-3 rounded-lg border border-slate-200 text-slate-400 font-medium text-sm bg-slate-50 cursor-not-allowed">
-                         Match starts soon
-                       </button>`;
-
-                // -- HTML Output --
+            
+            container.innerHTML = matchConfig.map(match => {
                 return `
-                    <div class="match-card bg-white rounded-xl p-6 border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-                        
-                        <!-- Left: Info -->
-                        <div class="flex flex-col items-center md:items-start w-full md:w-1/4">
-                            ${badge}
-                            <span class="mt-3 text-xs font-bold text-slate-400 uppercase tracking-widest">${match.tournament}</span>
+                <div id="card-${match.id}" class="bg-white rounded-2xl p-0 border border-slate-200 relative overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+                    
+                    <!-- Status Badge -->
+                    <div id="badge-${match.id}" class="absolute top-4 left-4 z-10">
+                        <div class="text-slate-500 font-bold text-[10px] uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                            Connecting...
                         </div>
-
-                        <!-- Center: Teams & VS -->
-                        <div class="flex-1 flex items-center justify-center gap-6 w-full">
-                            <!-- Home -->
-                            <div class="flex flex-col items-center gap-2 w-24 text-center">
-                                <i class="fa-solid ${match.homeLogo} text-4xl ${match.homeColor} mb-1"></i>
-                                <span class="font-bold text-slate-800 text-lg leading-tight">${match.homeTeam}</span>
-                            </div>
-
-                            <!-- VS Graphic -->
-                            <div class="flex flex-col items-center w-32">
-                                ${centerInfo}
-                            </div>
-
-                            <!-- Away -->
-                            <div class="flex flex-col items-center gap-2 w-24 text-center">
-                                <i class="fa-solid ${match.awayLogo} text-4xl ${match.awayColor} mb-1"></i>
-                                <span class="font-bold text-slate-800 text-lg leading-tight">${match.awayTeam}</span>
-                            </div>
-                        </div>
-
-                        <!-- Right: Button -->
-                        <div class="w-full md:w-1/4 flex justify-center md:justify-end">
-                            ${button}
-                        </div>
-
                     </div>
+                    
+                    <div class="p-6 pt-12 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
+                        
+                        <!-- Home Team -->
+                        <div class="flex-1 flex flex-col items-center gap-3 order-1">
+                            <div class="relative">
+                                <i class="fa-solid ${match.homeLogo} text-5xl ${match.homeColor} drop-shadow-sm"></i>
+                                <div id="bat-home-${match.id}" class="hidden absolute -bottom-2 -right-2 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-2 border-white">BAT</div>
+                            </div>
+                            <h2 class="font-bold text-slate-800 text-lg">${match.homeTeam}</h2>
+                        </div>
+
+                        <!-- Center Scoreboard -->
+                        <div class="w-full md:w-1/3 order-3 md:order-2 my-4 md:my-0 flex justify-center">
+                            
+                            <!-- LIVE LAYOUT (Hidden by default) -->
+                            <div id="live-ui-${match.id}" class="hidden flex flex-col items-center justify-center w-full">
+                                <div class="bg-slate-900 text-white rounded-lg px-6 py-3 shadow-xl flex flex-col items-center min-w-[160px] relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-4xl font-mono font-bold tracking-tighter text-brand-blue" id="runs-${match.id}">0</span>
+                                        <span class="text-2xl font-mono text-slate-400">/</span>
+                                        <span class="text-2xl font-mono font-bold text-brand-red" id="wickets-${match.id}">0</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Overs</span>
+                                        <span class="text-sm font-mono font-bold text-white" id="overs-${match.id}">0.0</span>
+                                    </div>
+                                </div>
+                                <div class="mt-3 flex gap-4 text-xs font-bold text-slate-500">
+                                    <span>CRR: <span class="text-slate-800" id="crr-${match.id}">0.0</span></span>
+                                </div>
+                            </div>
+
+                            <!-- UPCOMING LAYOUT (Visible by default) -->
+                            <div id="upcoming-ui-${match.id}" class="flex flex-col items-center">
+                                <div class="text-3xl font-black text-slate-200 mb-2">VS</div>
+                                <div class="bg-slate-100 text-slate-500 px-4 py-1 rounded text-sm font-mono countdown border border-slate-200" data-time="${match.startTime}">
+                                    Loading...
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Away Team -->
+                        <div class="flex-1 flex flex-col items-center gap-3 order-2 md:order-3">
+                            <div class="relative">
+                                <i class="fa-solid ${match.awayLogo} text-5xl ${match.awayColor} drop-shadow-sm"></i>
+                                <div id="bat-away-${match.id}" class="hidden absolute -bottom-2 -right-2 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-2 border-white">BAT</div>
+                            </div>
+                            <h2 class="font-bold text-slate-800 text-lg">${match.awayTeam}</h2>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="bg-slate-50 border-t border-slate-100 px-6 py-3 flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">${match.tournament}</span>
+                        <a href="${match.matchLink}" class="text-brand-blue hover:text-brand-dark font-bold text-xs flex items-center gap-1 transition-colors">
+                            Full Scorecard <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
                 `;
             }).join('');
-
+            
+            // Start the countdown logic immediately for scheduled matches
             startTimer();
         };
 
-        // 4. Timer Logic
+        // 3. FETCH DATA FROM API
+        async function fetchScores() {
+            try {
+                // Use your API URL here
+                const response = await fetch("http://live.hellocoder.online/score");
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const apiData = await response.json(); // Expecting array of matches
+
+                apiData.forEach(apiMatch => {
+                    updateDOM(apiMatch);
+                });
+
+            } catch (error) {
+                console.error("Error fetching score:", error);
+            }
+        }
+
+        // 4. UPDATE DOM ELEMENTS
+        function updateDOM(data) {
+            const id = data.id;
+            
+            // 1. Toggle between Live and Upcoming UI
+            const liveUI = document.getElementById(`live-ui-${id}`);
+            const upcomingUI = document.getElementById(`upcoming-ui-${id}`);
+            const badge = document.getElementById(`badge-${id}`);
+            
+            // Elements to update
+            const runEl = document.getElementById(`runs-${id}`);
+            const wicketEl = document.getElementById(`wickets-${id}`);
+            const overEl = document.getElementById(`overs-${id}`);
+            const crrEl = document.getElementById(`crr-${id}`);
+            
+            // Batting Indicators
+            const batHome = document.getElementById(`bat-home-${id}`);
+            const batAway = document.getElementById(`bat-away-${id}`);
+
+            // Handle STATUS
+            if (data.status === "LIVE") {
+                if(liveUI) liveUI.classList.remove('hidden');
+                if(upcomingUI) upcomingUI.classList.add('hidden');
+                
+                // Update Live Badge
+                badge.innerHTML = `
+                    <div class="flex items-center gap-2 text-white font-bold text-[10px] uppercase tracking-wider bg-red-600 px-3 py-1 rounded-full shadow-lg shadow-red-500/30">
+                        <span class="animate-pulse w-2 h-2 bg-white rounded-full"></span> Live
+                    </div>`;
+
+                // Update Numbers with Animation
+                if(runEl && runEl.innerText !== String(data.score.runs)) {
+                    runEl.innerText = data.score.runs;
+                    runEl.classList.remove('score-update');
+                    void runEl.offsetWidth; // Trigger Reflow
+                    runEl.classList.add('score-update');
+                }
+                
+                if(wicketEl) wicketEl.innerText = data.score.wickets;
+                if(overEl) overEl.innerText = data.score.overs;
+                if(crrEl) crrEl.innerText = data.score.crr || "0.0";
+
+                // Update Batting Indicator
+                if (data.score.battingSide === 'home') {
+                    batHome.classList.remove('hidden');
+                    batAway.classList.add('hidden');
+                } else if (data.score.battingSide === 'away') {
+                    batHome.classList.add('hidden');
+                    batAway.classList.remove('hidden');
+                }
+
+            } else {
+                // If NOT Live (Scheduled or Completed)
+                if(liveUI) liveUI.classList.add('hidden');
+                if(upcomingUI) upcomingUI.classList.remove('hidden');
+                
+                badge.innerHTML = `
+                    <div class="text-slate-500 font-bold text-[10px] uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                        ${data.status}
+                    </div>`;
+            }
+        }
+
+        // 5. COUNTDOWN TIMER
         function startTimer() {
             setInterval(() => {
                 document.querySelectorAll('.countdown').forEach(el => {
                     const target = new Date(el.dataset.time).getTime();
                     const now = new Date().getTime();
                     const diff = target - now;
-
-                    if (diff <= 0) {
-                        el.innerText = "Starting...";
-                        return;
-                    }
-
+                    if (diff <= 0) { el.innerText = "Starting..."; return; }
+                    
                     const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const s = Math.floor((diff / 1000) % 60);
-                    el.innerText = `Starts in ${h}h ${m}m ${s}s`;
+                    el.innerText = `Starts in ${h}h ${m}m`;
                 });
             }, 1000);
         }
 
-        // 5. Button Action
-        function viewScore(id) {
-            // This is where you would reveal the score or go to a details page
-            const btn = event.currentTarget;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Loading...`;
-
-            setTimeout(() => {
-                window.location.href = `https://cricheroes.com/scorecard/20349252/Navodaya-Primium-League-12/Red-Royals-vs-Yellow-Super-Kings`;
-                btn.innerHTML = `View Scorecard <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>`;
-            }, 800);
-        }
-
+        // Initialize
         renderMatches();
+        
+        // Fetch immediately then every 3 seconds
+        fetchScores();
+        setInterval(fetchScores, 3000); 
 
-
-
-        function loadScore() {
-            fetch("https://live.hellocoder.online/score")
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById("runs").innerText = data.run;
-                    document.getElementById("overs").innerText = data.over;
-                    document.getElementById("balls").innerText = data.ball;
-                    document.getElementById("wickets").innerText = data.wicket;
-
-                    console.log(data);
-                    
-                })
-                .catch(err => console.log(err));
-        }
-
-        setInterval(loadScore, 2000);
-        loadScore();
     </script>
 </body>
-
 </html>
