@@ -206,7 +206,7 @@
         async function fetchScores() {
             try {
                 // Use your API URL here
-                const response = await fetch("http://live.hellocoder.online/score");
+                const response = await fetch("https://live.hellocoder.online/score");
                 if (!response.ok) throw new Error('Network response was not ok');
                 
                 const apiData = await response.json(); // Expecting array of matches
