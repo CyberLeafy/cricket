@@ -331,6 +331,12 @@
                 requiredballEl.classList.remove('hidden');
             }
 
+            if (data.status === "LIVE" || data.status === "Completed") {
+                finishedMatch.classList.remove('countdown')
+            } else {
+                finishedMatch.classList.add('countdown')
+            }
+
             // Handle STATUS
             if (data.status === "LIVE") {
                 if (liveUI) liveUI.classList.remove('hidden');
