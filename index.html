@@ -241,7 +241,7 @@
 
                             <!-- UPCOMING LAYOUT (Visible by default) -->
                             <div id="upcoming-ui-${match.id}" class="flex flex-col items-center">
-                                <div class="text-3xl font-black text-slate-200 mb-2">VS</div>
+                                <div id="match-vs-${match.id}" class="text-3xl font-black text-slate-200 mb-2">VS</div>
                                 <div id="finished-${match.id}" class="text-center bg-slate-100 text-slate-500 px-4 py-1 rounded text-sm font-mono countdown border border-slate-200" data-time="${match.startTime}">
                                     Loading...
                                 </div>
@@ -332,12 +332,13 @@
             }
 
             if (data.status === "Completed") {
-                finishedMatch.classList.remove('countdown')
-                finishedMatch.classList.replace('text-slate-500','text-black')
-                
+                finishedMatch.classList.remove('countdown');
+                finishedMatch.classList.replace('text-slate-500','text-black');
+                document.getElementById(`match-vs-${id}`).classList.add('hidden');
             } else {
-                finishedMatch.classList.add('countdown')
-                finishedMatch.classList.replace('text-black','text-slate-500')
+                finishedMatch.classList.add('countdown');
+                finishedMatch.classList.replace('text-black','text-slate-500');
+                document.getElementById(`match-vs-${id}`).classList.remove('hidden');
             }
 
             // Handle STATUS
