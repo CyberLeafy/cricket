@@ -155,18 +155,18 @@
             //     startTime: new Date("2025-12-03T14:50:00"),
             //     matchLink: "https://cricheroes.com/scorecard/20349297/navodaya-primium-league-12/blue-indians-vs-yellow-super-kings/live"
             // },
-            {
-                id: 103,
-                tournament: "LEAGUE STAGE",
-                homeTeam: "RED ROYALS",
-                homeLogo: "fas fa-fist-raised",
-                homeColor: "text-red-600",
-                awayTeam: "GREEN WARRIORS",
-                awayLogo: "fa-brands fa-wolf-pack-battalion",
-                awayColor: "text-green-600",
-                startTime: new Date("2025-12-04T14:50:00"),
-                matchLink: "https://cricheroes.com/scorecard/20349308/navodaya-primium-league-12/red-royals-vs-green-warriors/live"
-            },
+            // {
+            //     id: 103,
+            //     tournament: "LEAGUE STAGE",
+            //     homeTeam: "RED ROYALS",
+            //     homeLogo: "fas fa-fist-raised",
+            //     homeColor: "text-red-600",
+            //     awayTeam: "GREEN WARRIORS",
+            //     awayLogo: "fa-brands fa-wolf-pack-battalion",
+            //     awayColor: "text-green-600",
+            //     startTime: new Date("2025-12-04T14:50:00"),
+            //     matchLink: "https://cricheroes.com/scorecard/20349308/navodaya-primium-league-12/red-royals-vs-green-warriors/live"
+            // },
             {
                 id: 104,
                 tournament: "LEAGUE STAGE",
@@ -604,7 +604,7 @@
                         return;
                     }
 
-                    if (diff <= 0) { el.innerText = `Starting...`; return; }
+                    if (diff <= 0) { el.innerText = `Internal Server Error! Please wait.`; return; }
 
                     const h = Math.floor(diff / (1000 * 60 * 60));
                     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
